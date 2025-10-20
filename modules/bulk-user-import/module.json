@@ -1,0 +1,20 @@
+{
+    "id": "bulk-user-import",
+    "name": "Bulk User Import",
+    "description": "Upload and review XLSX batches to create or update users and add group memberships.",
+    "version": "0.1.0",
+    "humhub": {
+        "minVersion": "1.14"
+    },
+    "keywords": [
+        "users",
+        "import",
+        "admin"
+    ],
+    "authors": [
+        {
+            "name": "IMP",
+            "role": "Developer"
+        }
+    ]
+}

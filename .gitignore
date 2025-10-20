@@ -1,0 +1,6 @@
+# Runtime & local overrides
+.DS_Store
+*.log
+docker/humhub.env
+docker/runtime/
+!docker/runtime/.gitignore

@@ -1,0 +1,54 @@
+services:
+  humhub:
+    image: mriedmann/humhub:1.14
+    container_name: humhub-app
+    env_file:
+      - docker/humhub.env
+    ports:
+      - "${HOST_HTTP_PORT:-8080}:80"
+    volumes:
+      - humhub-web:/var/www/localhost/htdocs
+      - ./modules:/var/www/localhost/htdocs/protected/modules-dev
+      - ./docker/runtime/uploads:/var/www/localhost/htdocs/uploads
+      - ./docker/runtime/assets:/var/www/localhost/htdocs/assets
+      - ./docker/runtime/protected-config:/var/www/localhost/htdocs/protected/config
+    depends_on:
+      db:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost/index.php"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    restart: unless-stopped
+
+  db:
+    image: mariadb:10.6
+    container_name: humhub-db
+    environment:
+      MYSQL_DATABASE: ${HUMHUB_DB_NAME:-humhub}
+      MYSQL_USER: ${HUMHUB_DB_USER:-humhub}
+      MYSQL_PASSWORD: ${HUMHUB_DB_PASSWORD:-humhub}
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:-humhubRootPassword}
+    volumes:
+      - humhub-db:/var/lib/mysql
+    command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    restart: unless-stopped
+
+  redis:
+    image: redis:7-alpine
+    container_name: humhub-redis
+    command: ["redis-server", "--appendonly", "yes"]
+    volumes:
+      - humhub-redis:/data
+    restart: unless-stopped
+
+volumes:
+  humhub-web:
+  humhub-db:
+  humhub-redis:
