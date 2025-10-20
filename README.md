@@ -1,6 +1,8 @@
 # HumHub Bulk User Import Module
 
-> **Screenshots**: _Add UI images at `docs/screenshots/01-upload.png`, `docs/screenshots/02-review.png`, and `docs/screenshots/03-summary.png`._
+![Upload dialog](docs/screenshots/01-upload.png)
+![Review table](docs/screenshots/02-review.png)
+![Import summary](docs/screenshots/03-summary.png)
 
 ## Overview
 
