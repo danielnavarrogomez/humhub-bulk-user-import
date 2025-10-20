@@ -121,5 +121,5 @@ Additional columns are allowed and ignored. Unknown groups appear as warnings du
 
 ## License
 
-Include your preferred license file (e.g. `LICENSE`) if you plan to distribute the module publicly.
+This module is distributed under the [GNU General Public License v3.0](LICENSE).
 
